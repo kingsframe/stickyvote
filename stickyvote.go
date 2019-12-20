@@ -8,10 +8,14 @@ import (
 var Schema = `
 	schema {
 		query: Query
+		mutation: Mutation
 	}
 	type Query {
 		getTopics(): [Topic!]!
 		getDemoTopic(): Topic!
+	}
+	type Mutation {
+		vote(topic: ID!, choice: Choice!): ID
 	}
 	type Topic {
 		left: String!
@@ -46,6 +50,15 @@ func init() {
 }
 
 type Resolver struct{}
+
+func (r *Resolver) Vote(args struct{
+	Topic graphql.ID
+	Choice string
+}) (*graphql.ID, error) {
+	var result graphql.ID = "0"
+	return &result, nil
+	//return nil, errors.New("This is not the droid you are looking for")
+}
 
 func (r *Resolver) GetTopics() ([]*topicResolver, error) {
 	return []*topicResolver{{data: topicData["0"]}, {data: topicData["1"]}}, nil
