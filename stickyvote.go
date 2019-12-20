@@ -3,7 +3,6 @@ package stickyvote
 import (
 	"errors"
 	"github.com/graph-gophers/graphql-go"
-
 )
 
 var topicData = make(map[graphql.ID]*topic)
@@ -14,6 +13,7 @@ func init() {
 	var topics = []*topic{
 		{ID: "0", Left: "Bernie", Right: "Trump", HasVoted: &CHOICE_LEFT},
 		{ID: "1", Left: "F150", Right: "CyberTruck", HasVoted: &CHOICE_RIGHT},
+		{ID: "2", Left: "Einstein", Right: "Euler", HasVoted: &CHOICE_LEFT},
 	}
 
 	for _, d := range topics {
@@ -23,8 +23,8 @@ func init() {
 
 type Resolver struct{}
 
-func (r *Resolver) Vote(args struct{
-	Topic graphql.ID
+func (r *Resolver) Vote(args struct {
+	Topic  graphql.ID
 	Choice string
 }) (*graphql.ID, error) {
 	var result graphql.ID = "0"
@@ -33,7 +33,11 @@ func (r *Resolver) Vote(args struct{
 }
 
 func (r *Resolver) GetTopics() ([]*topicResolver, error) {
-	return []*topicResolver{{data: topicData["0"]}, {data: topicData["1"]}}, nil
+	out := make([]*topicResolver, 0, len(topicData))
+	for _, value := range topicData {
+		out = append(out, &topicResolver{data: value})
+	}
+	return out, nil
 	//return nil, errors.New("This is not the droid you are looking for")
 }
 
@@ -43,4 +47,3 @@ func (r *Resolver) GetDemoTopic() (*topicResolver, error) {
 	}
 	return nil, errors.New("This is not the droid you are looking for")
 }
-
