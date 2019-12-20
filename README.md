@@ -1,0 +1,2 @@
+# stickyvote
+a voting machine
