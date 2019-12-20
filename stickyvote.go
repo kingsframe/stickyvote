@@ -10,7 +10,7 @@ var Schema = `
 		query: Query
 	}
 	type Query {
-		#getTopics(): [Topic!]!
+		getTopics(): [Topic!]!
 		getDemoTopic(): Topic!
 	}
 	type Topic {
@@ -47,27 +47,32 @@ func init() {
 
 type Resolver struct{}
 
+func (r *Resolver) GetTopics() ([]*topicResolver, error) {
+	return []*topicResolver{{data: topicData["0"]}, {data: topicData["1"]}}, nil
+	//return nil, errors.New("This is not the droid you are looking for")
+}
+
 func (r *Resolver) GetDemoTopic() (*topicResolver, error) {
-	if d := topicData["0"]; d != nil {
-		return &topicResolver{d: d}, nil
+	if val := topicData["0"]; val != nil {
+		return &topicResolver{data: val}, nil
 	}
 	return nil, errors.New("This is not the droid you are looking for")
 }
 
 type topicResolver struct {
-	d *topic
+	data *topic
 }
 
 func (r *topicResolver) ID() graphql.ID {
-	return r.d.ID
+	return r.data.ID
 }
 
 func (r *topicResolver) Left() string {
-	return r.d.Left
+	return r.data.Left
 }
 func (r *topicResolver) Right() string {
-	return r.d.Right
+	return r.data.Right
 }
 func (r *topicResolver) HasVoted() *string {
-	return r.d.HasVoted
+	return r.data.HasVoted
 }
