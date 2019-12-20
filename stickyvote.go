@@ -3,36 +3,8 @@ package stickyvote
 import (
 	"errors"
 	"github.com/graph-gophers/graphql-go"
-)
 
-var Schema = `
-	schema {
-		query: Query
-		mutation: Mutation
-	}
-	type Query {
-		getTopics(): [Topic!]!
-		getDemoTopic(): Topic!
-	}
-	type Mutation {
-		vote(topic: ID!, choice: Choice!): ID
-	}
-	type Topic {
-		left: String!
-		right: String!
-		hasVoted: Choice
-	}
-	enum Choice {
-		LEFT
-		RIGHT
-	}	
-`
-type topic struct {
-	ID       graphql.ID
-	Left     string
-	Right    string
-	HasVoted *string //TODO check if this is correct
-}
+)
 
 var topicData = make(map[graphql.ID]*topic)
 
@@ -72,20 +44,3 @@ func (r *Resolver) GetDemoTopic() (*topicResolver, error) {
 	return nil, errors.New("This is not the droid you are looking for")
 }
 
-type topicResolver struct {
-	data *topic
-}
-
-func (r *topicResolver) ID() graphql.ID {
-	return r.data.ID
-}
-
-func (r *topicResolver) Left() string {
-	return r.data.Left
-}
-func (r *topicResolver) Right() string {
-	return r.data.Right
-}
-func (r *topicResolver) HasVoted() *string {
-	return r.data.HasVoted
-}
