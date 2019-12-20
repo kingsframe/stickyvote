@@ -2,11 +2,13 @@ package stickyvote
 
 import	"github.com/graph-gophers/graphql-go"
 
+type choice *string
+
 type topic struct {
 	ID       graphql.ID
 	Left     string
 	Right    string
-	HasVoted *string //TODO check if this is correct
+	HasVoted choice //TODO check if this is correct
 }
 
 type topicResolver struct {
@@ -23,6 +25,6 @@ func (r *topicResolver) Left() string {
 func (r *topicResolver) Right() string {
 	return r.data.Right
 }
-func (r *topicResolver) HasVoted() *string {
+func (r *topicResolver) HasVoted() choice {
 	return r.data.HasVoted
 }

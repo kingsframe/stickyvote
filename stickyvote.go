@@ -27,6 +27,14 @@ func (r *Resolver) Vote(args struct {
 	Topic  graphql.ID
 	Choice string
 }) (*graphql.ID, error) {
+	//check if topic exists
+	if val:= topicData[args.Topic]; val != nil {
+		//yes -> update topic to reflect user's vote
+		//val.HasVoted
+	}
+
+	//no -> return nil
+
 	var result graphql.ID = "0"
 	return &result, nil
 	//return nil, errors.New("This is not the droid you are looking for")
@@ -39,6 +47,7 @@ func (r *Resolver) GetTopics() ([]*topicResolver, error) {
 	}
 	return out, nil
 	//return nil, errors.New("This is not the droid you are looking for")
+
 }
 
 func (r *Resolver) GetDemoTopic() (*topicResolver, error) {
