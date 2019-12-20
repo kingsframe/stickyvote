@@ -13,6 +13,7 @@ var Schema = `
 		vote(topic: ID!, choice: Choice!): ID
 	}
 	type Topic {
+		id: ID!
 		left: String!
 		right: String!
 		hasVoted: Choice
