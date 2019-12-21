@@ -2,12 +2,11 @@ package main
 
 import (
 	"fmt"
-	"log"
-	"net/http"
-	"stickyvote"
-
 	"github.com/graph-gophers/graphql-go"
 	"github.com/graph-gophers/graphql-go/relay"
+	"log"
+	"net/http"
+	"stickyvote/stickyvote"
 )
 
 var schema *graphql.Schema
