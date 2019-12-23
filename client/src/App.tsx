@@ -1,7 +1,7 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {render} from 'react-dom';
 
+import {ApolloProvider, useQuery} from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 import ApolloClient from 'apollo-boost';
 
@@ -9,42 +9,36 @@ const client = new ApolloClient({
     uri: 'http://localhost:8080/query',
 });
 
-// or you can use `import gql from 'graphql-tag';` instead
+const query = gql`
+    query {
+        getTopics{
+            id
+            left
+            right
+            hasVoted
+        }
+    }
+`;
 
-const App: React.FC = () => {
-    client
-    .query({
-        query: gql`
-            query {
-                getTopics{
-                    id
-                    left
-                    right
-                    hasVoted
-                }
-            }
-        `
-    })
-    .then(result => console.log(result));
 
-    return (
-        <div className="App">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo"/>
-                <p>
-                    Edit <code>src/App.tsx</code> and save to reload.
-                </p>
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Learn React
-                </a>
-            </header>
+const App = () => (
+    <ApolloProvider client={client}>
+        <div>
+            <h2>My first Apollo app 🚀</h2>
+            <MagicComponent/>
         </div>
-    );
+    </ApolloProvider>
+);
+
+
+function MagicComponent() {
+    const {loading, error, data} = useQuery(query);
+
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error :(</p>;
+    console.log(data);
+    return <div>got data!</div>;
 }
 
+render(<App/>, document.getElementById('root'));
 export default App;
