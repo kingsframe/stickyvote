@@ -1,7 +1,7 @@
 module.exports = {
   client: {
     service: {
-      name: 'sticky-vote',
+      name: 'stickyvote',
       localSchemaFile: '../schema.graphql'
     }
   }
