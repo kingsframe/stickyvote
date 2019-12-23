@@ -3,11 +3,10 @@ import logo from './logo.svg';
 import './App.css';
 
 import gql from 'graphql-tag';
-import {useQuery} from '@apollo/react-hooks';
 import ApolloClient from 'apollo-boost';
 
 const client = new ApolloClient({
-    uri: 'http://localhost:8080/',
+    uri: 'http://localhost:8080/query',
 });
 
 // or you can use `import gql from 'graphql-tag';` instead
