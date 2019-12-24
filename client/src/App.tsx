@@ -8,7 +8,6 @@ import ApolloClient from 'apollo-boost';
 const client = new ApolloClient({
     uri: 'http://localhost:8080/query',
 });
-
 const query = gql`
     query {
         getTopics{
@@ -24,7 +23,7 @@ const query = gql`
 const App = () => (
     <ApolloProvider client={client}>
         <div>
-            <h2>My first Apollo app 🚀</h2>
+            <h2>My first Apollo app</h2>
             <MagicComponent/>
         </div>
     </ApolloProvider>
