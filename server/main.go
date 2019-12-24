@@ -22,7 +22,7 @@ func main() {
 
 	http.Handle("/query", &relay.Handler{Schema: schema})
 	fmt.Println("running!")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(":8888", nil))
 }
 
 var page = []byte(`
