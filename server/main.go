@@ -15,14 +15,34 @@ func init() {
 	schema = graphql.MustParseSchema(stickyvote.Schema, &stickyvote.Resolver{})
 }
 
+func corsHandler(h http.Handler) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == "OPTIONS" {
+			//handle preflight in here
+			fmt.Println("IN OPTIONS!!!")
+			w.Header().Set("X-Powered-By", "gopher_tech")
+			w.Header().Set("Access-Control-Allow-Origin", "*")
+			w.Header().Set("Access-Control-Allow-Methods", "GET,HEAD,PUT,PATCH,POST,DELETE")
+			w.Header().Set("Vary", "Access-Control-Request-Headers")
+			w.Header().Set("Access-Control-Allow-Headers", "authorization,client-name,client-version,content-type")
+			w.Header().Set("Connection", "keep-alive")
+			//w.Header().Set("Content-Length", "0")
+			w.WriteHeader(204)
+		} else {
+			h.ServeHTTP(w, r)
+		}
+	}
+}
+
 func main() {
 	http.Handle("/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Write(page)
 	}))
 
-	http.Handle("/query", &relay.Handler{Schema: schema})
+	//http.Handle("/query", &relay.Handler{Schema: schema})
+	http.Handle("/query", corsHandler(&relay.Handler{Schema: schema}))
 	fmt.Println("running!")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(":8888", nil))
 }
 
 var page = []byte(`
