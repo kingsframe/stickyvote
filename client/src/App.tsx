@@ -8,8 +8,8 @@ import ApolloClient from 'apollo-boost';
 const client = new ApolloClient({
     uri: 'http://localhost:8080/query',
 });
-const query = gql`
-    query {
+const GET_TOPICS = gql`
+    query getTopics {
         getTopics{
             id
             left
@@ -18,7 +18,6 @@ const query = gql`
         }
     }
 `;
-
 
 const App = () => (
     <ApolloProvider client={client}>
@@ -31,7 +30,7 @@ const App = () => (
 
 
 function MagicComponent() {
-    const {loading, error, data} = useQuery(query);
+    const {loading, error, data} = useQuery(GET_TOPICS);
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error :(</p>;
