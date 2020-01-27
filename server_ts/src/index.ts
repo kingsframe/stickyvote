@@ -27,9 +27,9 @@ const resolvers = {
         // launch: (_, {id}, {dataSources}) =>
         //     dataSources.launchAPI.getLaunchById({launchId: id}),
         // me: (_, __, {dataSources}) => dataSources.userAPI.findOrCreateUser()
-        books: (_, __, ___) => {
+        books: () => {
             return [{
-                title: "im a title",
+                title: "im a title222",
                 author: "im a author"
             }]
         }
@@ -37,6 +37,6 @@ const resolvers = {
 };
 
 const server = new ApolloServer({typeDefs, resolvers});
-server.listen().then(({url}) => {
+server.listen().then(({url}: { url: string }) => {
     console.log(`🚀 Server ready at ${url}`);
 });
