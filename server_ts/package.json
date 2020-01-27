@@ -8,11 +8,17 @@
     "graphql": "^14.6.0"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^1.11.2",
     "nodemon": "^2.0.2",
     "ts-node": "^8.6.2",
-    "typescript": "^3.7.5"
+    "typescript": "^3.7.5",
+    "@graphql-codegen/typescript": "1.11.2",
+    "@graphql-codegen/typescript-resolvers": "1.11.2",
+    "@graphql-codegen/introspection": "1.11.2"
   },
   "scripts": {
-    "start": "nodemon src/index.ts"
+    "start": "nodemon src/index.ts",
+    "postinstall": "yarn codegen",
+    "codegen": "graphql-codegen --config codegen.yml"
   }
 }
