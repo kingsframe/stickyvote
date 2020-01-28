@@ -2,9 +2,6 @@ import {Choice, Topic} from "./generated/graphql";
 
 const {ApolloServer, gql} = require('apollo-server');
 
-// A schema is a collection of type definitions (hence "typeDefs")
-// that together define the "shape" of queries that are executed against
-// your data.
 const typeDefs = gql`
     type Query {
         getTopics: [Topic!]!
@@ -25,15 +22,19 @@ const typeDefs = gql`
     }
 `;
 
+const db = [
+    {id: "0", left: "Bernie", right: "Trump", hasVoted: Choice.Left},
+    {id: "1", left: "F150", right: "CyberTruck", hasVoted: Choice.Right},
+    {id: "2", left: "Einstein", right: "Euler", hasVoted: Choice.Left},
+];
+
 const resolvers = {
     Query: {
-        // launches: (_, __, {dataSources}) =>
-        //     dataSources.launchAPI.getAllLaunches(),
-        // launch: (_, {id}, {dataSources}) =>
-        //     dataSources.launchAPI.getLaunchById({launchId: id}),
-        // me: (_, __, {dataSources}) => dataSources.userAPI.findOrCreateUser()
         getDemoTopic: (): Topic => {
             return {id: "0", left: "Bernie", right: "Trump", hasVoted: Choice.Left}
+        },
+        getTopics: (): Array<Topic> => {
+            return db
         }
     }
 };
