@@ -1,4 +1,11 @@
-import {Choice, Mutation, MutationResolvers, MutationVoteArgs, QueryResolvers, Topic} from "./generated/graphql";
+import {
+    Choice,
+    MutationResolvers,
+    MutationVoteArgs,
+    QueryResolvers,
+    Resolvers,
+    Topic,
+} from "./generated/graphql";
 
 const {ApolloServer, gql} = require('apollo-server');
 
@@ -41,7 +48,7 @@ const queryResolvers: QueryResolvers = {
 const mutationResolvers: MutationResolvers = {
     vote: (parent, args: MutationVoteArgs) => {
         const {topic, choice} = args;
-        if (db[topic]) {
+        if (topic in db) {
             db[topic].hasVoted = choice;
             return db[topic].id;
         }
@@ -49,7 +56,7 @@ const mutationResolvers: MutationResolvers = {
     }
 };
 
-const resolvers = {
+const resolvers: Resolvers = {
     Query: queryResolvers,
     Mutation: mutationResolvers
 };
