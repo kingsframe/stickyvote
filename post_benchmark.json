@@ -1,0 +1,9 @@
+query getTopics {
+  getTopics {
+    id
+    left
+    right
+    hasVoted
+  }
+}
+
